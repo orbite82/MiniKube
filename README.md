@@ -5,7 +5,7 @@ Estudos com MiniKube
 
   * Link de referencia Instalando MineKube:
 
-   *[link](https://minikube.sigs.k8s.io/docs/start/)
+   * [link](https://minikube.sigs.k8s.io/docs/start/)
 
 * __Install__
 
