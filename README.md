@@ -157,7 +157,7 @@ Estudos com MiniKube
 
  ```
 
-* __Create pod Demo__
+* __Create pod Demo Old__
 
  ```
   kubectl run demo --image=orbite82/myhello-v1 --port=9999 --labels app=demo
@@ -183,7 +183,66 @@ Estudos com MiniKube
    hello-minikube   1/1     1            1           43h
 
  ```
-* __Usando Apply__
+* __Create pod Demo New__ 
+
+ ```
+  kubectl run demo --image=orbite82/myhello-v1 --port=9999 --labels app=demo
+  kubectl port-forward  pod/demo 9999:8888
+  http://localhost:9999/
+
+ ```
+ ```
+  kubectl get pods
+  NAME                              READY   STATUS    RESTARTS        AGE
+  balanced-5744b548b4-lrt5x         1/1     Running   2 (3h18m ago)   45h
+  demo                              1/1     Running   0               39s
+  hello-minikube-6ddfcc9757-sglbz   1/1     Running   2 (3h18m ago)   47h
+ ``` 
+ ```
+   kubectl get pods --selector app=demo
+ ```
+ ```
+  kubectl port-forward pod/demo 9999:8888
+  Forwarding from 127.0.0.1:9999 -> 8888
+  Forwarding from [::1]:9999 -> 8888
+  http://localhost:9999
+ ```
+ ```
+  kubectl get pods --selector app=demo
+  NAME   READY   STATUS    RESTARTS   AGE
+  demo   1/1     Running   0          3m55s
+ ```
+ ```
+  kubectl delete pods --selector app=demo
+  pod "demo" deleted
+  pod "demo-c77cc8d6f-rltpx" deleted
+ ```
+ ```
+  kubectl get pods --selector app=demo
+  NAME                   READY   STATUS    RESTARTS   AGE
+  demo-c77cc8d6f-454h9   1/1     Running   0          5s
+ ```
+ ```
+  kubectl delete all --selector app=demo
+  pod "demo-c77cc8d6f-454h9" deleted
+  deployment.apps "demo" deleted
+  replicaset.apps "demo-c77cc8d6f" deleted
+ ```
+
+ * __Usando Apply New__
+ ```
+  ~/MiniKube/hello-k8s
+  kubectl apply -f k8s/deployment.yaml
+  deployment.apps/demo created
+
+  kubectl get pods --selector app=demo
+  NAME                   READY   STATUS    RESTARTS   AGE
+  demo-c77cc8d6f-ckgp4   1/1     Running   0          31s
+  ┌─[orbite]@[Navita]:~/MiniKube/hello-k8s
+
+ ```
+
+* __Usando Apply old__
 
  ```
    ~/MiniKube/hello-k8s
@@ -194,8 +253,22 @@ Estudos com MiniKube
    NAME                   READY   STATUS    RESTARTS   AGE
    demo-c77cc8d6f-jk2tv   1/1     Running   0          81s
  ```
+* __Usando Service New__
 
-* __Usando Service__
+ ```
+  kubectl apply -f k8s/service.yaml 
+  service/demo created 
+
+  kubectl port-forward service/demo 9999:8888
+  Forwarding from 127.0.0.1:9999 -> 8888
+  Forwarding from [::1]:9999 -> 8888
+
+  kubectl delete -f k8s/
+  deployment.apps "demo" deleted
+  service "demo" deleted
+ ```
+
+* __Usando Service Old__
 
  ```
    ~/MiniKube/hello-k8s
@@ -273,4 +346,51 @@ Estudos com MiniKube
    sudo apt-get update
    sudo apt-get install helm
  ```
+ ```
+  kubectl delete all --selector app=demo
+  service "demo" deleted
+ ```
+* __Install Helm chart__
+
+ ```
+  ~/MiniKube/hello-helm3
+
+  helm install demo ./k8s/demo
+  NAME: demo
+  LAST DEPLOYED: Fri Oct  8 16:21:33 2021
+  NAMESPACE: default
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+
+ ```
+ ```
+  kubectl get pods
+  NAME                              READY   STATUS    RESTARTS        AGE
+  balanced-5744b548b4-lrt5x         1/1     Running   2 (4h48m ago)   47h
+  demo-5bf7bc95c7-b4s2s             1/1     Running   0               86s
+  hello-minikube-6ddfcc9757-sglbz   1/1     Running   2 (4h48m ago)   2d
+ ```
+
+* __Listando releases do Helm__
+
+ ```
+  helm list
+  NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+  demo    default         1               2021-10-08 16:21:33.32266034 -0300 -03  deployed        demo-1.0.1 
+ ```
+
+* __Listando o Status da release especifica__
+
+ ```
+  helm status demo
+  NAME: demo
+  LAST DEPLOYED: Fri Oct  8 16:21:33 2021
+  NAMESPACE: default
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+ ```
+
+
 
