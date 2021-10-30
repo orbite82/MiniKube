@@ -56,6 +56,8 @@ Estudos com MiniKube
 
 * __Create Alias MiniKube__
 
+ * [link](https://minikube.sigs.k8s.io/docs/start/)
+
  ```
   alias kubectl="minikube kubectl --"
 
