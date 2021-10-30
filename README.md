@@ -398,5 +398,19 @@ Estudos com MiniKube
   TEST SUITE: None
  ```
 
+* __Install GO__
+
+[Ref Link Binario](https://golang.org/dl/)
+
+[Ref Link Install](https://golang.org/doc/install)
+
+```
+sudo -i
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.2.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+go version
+
+```
+
 
 
