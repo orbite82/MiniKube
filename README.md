@@ -244,7 +244,7 @@ Estudos com MiniKube
   kubectl get pods --selector app=demo
   NAME                   READY   STATUS    RESTARTS   AGE
   demo-c77cc8d6f-ckgp4   1/1     Running   0          31s
-  ┌─[orbite]@[Navita]:~/MiniKube/hello-k8s
+  [orbite]~/MiniKube/hello-k8s
 
  ```
 
@@ -420,3 +420,113 @@ go version
 Obs: Não testado ainda!
 
 
+* __NameSpace__
+
+hello-namespace
+
+```
+echo 'export PATH=$PATH:/snap/bin' >> ~/.bashrc
+source ~/.bashrc
+bash
+
+```
+
+```
+kubectl apply -f hello-namespace/k8s/deployment.yaml
+
+```
+
+```
+kubectl get deployments
+NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+demo   1/1     1            1           2m52s
+
+kubectl get deployments/demo
+NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+demo   1/1     1            1           3m26s
+
+kubectl get pods --selector app=demo
+NAME                    READY   STATUS    RESTARTS   AGE
+demo-6465d8f7c9-6pqd7   1/1     Running   0          4m32s
+
+```
+
+```
+kubectl describe pod demo
+Name:         demo-6465d8f7c9-6pqd7
+Namespace:    default
+Priority:     0
+Node:         minikube/192.168.99.100
+Start Time:   Sat, 30 Oct 2021 20:22:13 -0300
+Labels:       app=demo
+              pod-template-hash=6465d8f7c9
+Annotations:  <none>
+Status:       Running
+IP:           172.17.0.5
+IPs:
+  IP:           172.17.0.5
+Controlled By:  ReplicaSet/demo-6465d8f7c9
+Containers:
+  demo:
+    Container ID:   docker://6d85102f8c68bb38ab9a0cfcaef245d173ef3105cbabaea2713b3e5dfb128ce2
+    Image:          cloudnatived/demo:hello
+    Image ID:       docker-pullable://cloudnatived/demo@sha256:bd04206ca8ab7025c465dc2b9d3282c2e0da216c71011d26d66ef51f5a5d3e34
+    Port:           8888/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 30 Oct 2021 20:22:22 -0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     250m
+      memory:  20Mi
+    Requests:
+      cpu:        100m
+      memory:     10Mi
+    Liveness:     http-get http://:8888/ delay=3s timeout=1s period=3s #success=1 #failure=3
+    Readiness:    http-get http://:8888/ delay=3s timeout=1s period=3s #success=1 #failure=3
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-fwfvv (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-fwfvv:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  5m51s  default-scheduler  Successfully assigned default/demo-6465d8f7c9-6pqd7 to minikube
+  Normal  Pulling    5m47s  kubelet            Pulling image "cloudnatived/demo:hello"
+  Normal  Pulled     5m42s  kubelet            Successfully pulled image "cloudnatived/demo:hello" in 4.199679829s
+  Normal  Created    5m42s  kubelet            Created container demo
+  Normal  Started    5m42s  kubelet            Started container demo
+
+```
+> **_Quota de recusos_** :
+> Assim como podemos restringir o uso de CPU e de memória em contêineres, podemos restringir o uso de recursos em um namespace com ResourceQuota no NameSpace!
+```
+~/MiniKube
+└──> $ cd hello-namespace
+
+kubectl create namespace demo
+namespace/demo created
+
+~/MiniKube/hello-namespace
+└──> $ ls k8s/
+
+~/MiniKube/hello-namespace
+└──> $ kubectl apply --namespace demo -f k8s/resourcequota.yaml 
+resourcequota/demo-resourcequota created
