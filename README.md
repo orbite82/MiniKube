@@ -529,3 +529,14 @@ namespace/demo created
 ~/MiniKube/hello-namespace
 └──> $ kubectl apply --namespace demo -f k8s/resourcequota.yaml 
 resourcequota/demo-resourcequota created
+
+```
+* Verificar o limite
+
+```
+kubectl get resourcequotas -n demo
+NAME                 AGE   REQUEST       LIMIT
+demo-resourcequota   10m   pods: 0/100
+
+```
+
