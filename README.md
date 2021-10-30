@@ -419,10 +419,9 @@ go version
 
 Obs: Não testado ainda!
 
-
-* __NameSpace__
-
 # hello-namespace
+
+ * __NameSpace__
 
 ```
 echo 'export PATH=$PATH:/snap/bin' >> ~/.bashrc
