@@ -422,7 +422,7 @@ Obs: Não testado ainda!
 
 * __NameSpace__
 
-hello-namespace
+# hello-namespace
 
 ```
 echo 'export PATH=$PATH:/snap/bin' >> ~/.bashrc
