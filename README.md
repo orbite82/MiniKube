@@ -531,7 +531,7 @@ namespace/demo created
 resourcequota/demo-resourcequota created
 
 ```
-* Verificar o limite
+* Verificar se o ResourceQuota esta ativo!
 
 ```
 kubectl get resourcequotas -n demo
