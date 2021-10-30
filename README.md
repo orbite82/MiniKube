@@ -415,7 +415,7 @@ go version
 
 [Ref Link](https://github.com/grpc-ecosystem/grpc-health-probe/blob/master/README.md)
 
-[Ref Link 2] (https://kubernetes.io/blog/2018/10/01/health-checking-grpc-servers-on-kubernetes/)
+[Ref Link 2](https://kubernetes.io/blog/2018/10/01/health-checking-grpc-servers-on-kubernetes/)
 
 Obs: Não testado ainda!
 
