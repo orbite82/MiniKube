@@ -539,4 +539,15 @@ NAME                 AGE   REQUEST       LIMIT
 demo-resourcequota   10m   pods: 0/100
 
 ```
+# Verificando todos os namespaces
+
+```
+kubectl get deployment --all-namespaces
+NAMESPACE              NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+default                demo                        1/1     1            1           22d
+kube-system            coredns                     1/1     1            1           22d
+kubernetes-dashboard   dashboard-metrics-scraper   1/1     1            1           22d
+kubernetes-dashboard   kubernetes-dashboard        1/1     1            1           22d
+
+```
 
