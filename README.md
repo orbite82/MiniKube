@@ -608,3 +608,33 @@ $
 
 ```
 ---
+
+> **_Describe nodes_** :
+
+```
+kubectl describe nodes minikube
+
+```
+> **_Bash Completion_** :
+
+```
+sudo apt-get install -y bash-complation
+sudo su
+kubectl completion bash > /etc/bash_completion.d/kubectl
+~/MiniKube$ source <(kubectl completion bash
+
+~/MiniKube
+└──> $ kube
+kubectl  kubectx  kubens
+
+kubectl get pods -n kube-system
+NAME                               READY   STATUS    RESTARTS      AGE
+coredns-78fcd69978-dmv9f           1/1     Running   4 (36m ago)   22d
+etcd-minikube                      1/1     Running   4 (36m ago)   22d
+kube-apiserver-minikube            1/1     Running   4 (36m ago)   22d
+kube-controller-manager-minikube   1/1     Running   4 (36m ago)   22d
+kube-proxy-fvjl2                   1/1     Running   4 (36m ago)   22d
+kube-scheduler-minikube            1/1     Running   4 (36m ago)   22d
+storage-provisioner                1/1     Running   5 (36m ago)   22d
+
+```
