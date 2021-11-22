@@ -556,7 +556,7 @@ __
 
 ```
 ~/MiniKube$ minikube ip
-192.168.99.100
+192.168.99.200
 ~/MiniKube$ minikube ssh
                          _             _            
             _         _ ( )           ( )           
