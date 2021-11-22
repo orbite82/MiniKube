@@ -539,6 +539,7 @@ NAME                 AGE   REQUEST       LIMIT
 demo-resourcequota   10m   pods: 0/100
 
 ```
+__
 # Verificando todos os namespaces
 
 ```
@@ -549,5 +550,21 @@ kube-system            coredns                     1/1     1            1       
 kubernetes-dashboard   dashboard-metrics-scraper   1/1     1            1           22d
 kubernetes-dashboard   kubernetes-dashboard        1/1     1            1           22d
 
+```
+__
+# Acessando Minikube e verificando ip
+
+```
+~/MiniKube$ minikube ip
+192.168.99.100
+~/MiniKube$ minikube ssh
+                         _             _            
+            _         _ ( )           ( )           
+  ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __  
+/' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
+| ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
+(_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
+
+$
 ```
 
