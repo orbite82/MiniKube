@@ -330,6 +330,7 @@ Estudos com MiniKube
    replicaset.apps/hello-minikube-6ddfcc9757   1         1         1       46h
 
  ```
+---
 
 * __Install Helm__ 
 
