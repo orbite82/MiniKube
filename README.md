@@ -598,4 +598,13 @@ $
 ~/MiniKube$ minikube delete
 
 ```
+
+> **_Stop_** :
+
+```
+~/MiniKube$ minikube stop
+✋  Stopping node "minikube"  ...
+🛑  1 nodes stopped.
+
+```
 ---
