@@ -554,6 +554,20 @@ kubernetes-dashboard   kubernetes-dashboard        1/1     1            1       
 
 ```
 ---
+# Verificando NameSpaces
+
+```
+kubectl get namespaces
+NAME                   STATUS   AGE
+default                Active   22d
+demo                   Active   22d
+kube-node-lease        Active   22d
+kube-public            Active   22d
+kube-system            Active   22d
+kubernetes-dashboard   Active   22d
+
+```
+---
 # Acessando Minikube e verificando ip
 
 ```
