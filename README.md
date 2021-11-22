@@ -592,3 +592,9 @@ __
 ```
 > **_Delete_** :
 
+```
+~/MiniKube$ minikube delete
+
+```
+__
+
