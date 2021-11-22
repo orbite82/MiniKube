@@ -567,4 +567,28 @@ __
 
 $
 ```
+__
+# Start ou Delete Minikube 
+
+> **_Start_** :
+
+```
+~/MiniKube$ minikube start
+😄  minikube v1.23.2 on Linuxmint 20
+🎉  minikube 1.24.0 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.24.0
+💡  To disable this notice, run: 'minikube config set WantUpdateNotification false'
+
+✨  Using the virtualbox driver based on existing profile
+👍  Starting control plane node minikube in cluster minikube
+🔄  Restarting existing virtualbox VM for "minikube" ...
+🐳  Preparing Kubernetes v1.22.2 on Docker 20.10.8 ...
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🔎  Verifying Kubernetes components...
+    ▪ Using image kubernetesui/metrics-scraper:v1.0.7
+    ▪ Using image kubernetesui/dashboard:v2.3.1
+🌟  Enabled addons: storage-provisioner, default-storageclass, dashboard
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+
+```
+> **_Delete_** :
 
