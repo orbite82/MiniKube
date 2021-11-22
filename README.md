@@ -419,6 +419,7 @@ go version
 
 Obs: Não testado ainda!
 
+---
 # hello-namespace
 
  * __NameSpace__
@@ -539,7 +540,7 @@ NAME                 AGE   REQUEST       LIMIT
 demo-resourcequota   10m   pods: 0/100
 
 ```
-__
+---
 # Verificando todos os namespaces
 
 ```
@@ -551,7 +552,7 @@ kubernetes-dashboard   dashboard-metrics-scraper   1/1     1            1       
 kubernetes-dashboard   kubernetes-dashboard        1/1     1            1           22d
 
 ```
-__
+---
 # Acessando Minikube e verificando ip
 
 ```
@@ -567,7 +568,7 @@ __
 
 $
 ```
-__
+---
 # Start ou Delete Minikube 
 
 > **_Start_** :
@@ -596,5 +597,4 @@ __
 ~/MiniKube$ minikube delete
 
 ```
-__
-
+---
