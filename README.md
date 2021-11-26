@@ -1137,4 +1137,70 @@ Session Affinity:  None
 Events:            <none>
 
 ```
+# Edit service nginx
+
+> **_Editando o service do nginx para NodePort_**
+
+```
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2021-11-26T16:27:54Z"
+  labels:
+    run: nginx
+  name: nginx
+  namespace: default
+  resourceVersion: "17916"
+  uid: 5926689d-cd0f-4e7f-b834-64508137206a
+spec:
+  clusterIP: 10.99.99.30
+  clusterIPs:
+  - 10.99.99.30
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: nginx
+  sessionAffinity: None
+  type: ClusterIP  #edite aqui para NodePort
+
+```
+
+```
+kubectl edit service nginx
+service/nginx edited
+
+```
+```
+kubectl get service
+NAME         TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1     <none>        443/TCP        26d
+nginx        NodePort    10.99.99.30   <none>        80:32371/TCP   12m
+
+```
+# Verificando o ip do minicube e acessando o nginx no browser
+
+> **_Verificando ip minikube_**
+
+```
+minikube ip
+192.168.99.100
+
+```
+
+> **_Testando com a porta alterado do NodePort no browser_**
+
+http://192.168.99.100:32371
+
+[nginx-browser-test](nginx-browser-test.png)
+
 
