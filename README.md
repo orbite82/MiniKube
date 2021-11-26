@@ -1205,7 +1205,7 @@ http://192.168.99.100:32371
 
 [nginx-browser-test](nginx-browser-test.png)
 
-> **_Test via crul_**
+> **_Test via curl_**
 
 ```
 curl 192.168.99.100:32371
