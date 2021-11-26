@@ -652,3 +652,254 @@ kube-scheduler-minikube            1/1     Running   4 (36m ago)   22d
 storage-provisioner                1/1     Running   5 (36m ago)   22d
 
 ```
+
+# Criar Meu Primeiro Pod e Name Space
+
+> **_Primeiro Pod e Name Space_** :
+
+```
+kubectl create namespace orbite-namespace
+namespace/orbite-namespace created
+
+```
+
+```
+kubectl get namespaces
+NAME                   STATUS   AGE
+default                Active   26d
+demo                   Active   26d
+kube-node-lease        Active   26d
+kube-public            Active   26d
+kube-system            Active   26d
+kubernetes-dashboard   Active   26d
+orbite-namespace       Active   27s
+
+```
+
+```
+kubectl run nginx --image=nginx
+pod/nginx created
+
+```
+
+```
+kubectl get pods
+NAME                    READY   STATUS    RESTARTS        AGE
+demo-6465d8f7c9-6pqd7   1/1     Running   5 (3d17h ago)   26d
+nginx                   1/1     Running   0               39s
+
+```
+
+```
+kubectl describe pods nginx
+Name:         nginx
+Namespace:    default
+Priority:     0
+Node:         minikube/192.168.99.100
+Start Time:   Fri, 26 Nov 2021 12:03:26 -0300
+Labels:       run=nginx
+Annotations:  <none>
+Status:       Running
+IP:           172.17.0.6
+IPs:
+  IP:  172.17.0.6
+Containers:
+  nginx:
+    Container ID:   docker://382e94f94156b715b2d02b18165eb6588bbe427a4b6392968bc1c112964ae631
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:097c3a0913d7e3a5b01b6c685a60c03632fc7a2b50bc8e35bcaa3691d788226e
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Fri, 26 Nov 2021 12:03:45 -0300
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-stqrp (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-stqrp:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  2m38s  default-scheduler  Successfully assigned default/nginx to minikube
+  Normal  Pulling    2m37s  kubelet            Pulling image "nginx"
+  Normal  Pulled     2m21s  kubelet            Successfully pulled image "nginx" in 16.339025088s
+  Normal  Created    2m20s  kubelet            Created container nginx
+  Normal  Started    2m20s  kubelet            Started container nginx
+
+```
+
+```
+kubectl get pods nginx -o wide
+NAME    READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+nginx   1/1     Running   0          23m   172.17.0.6   minikube   <none>           <none>
+
+```
+
+# Ver em formato yaml como foi criado
+
+> **_Ver o manifesto do pod em yaml_** :
+
+```
+kubectl get pods nginx -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2021-11-26T15:03:26Z"
+  labels:
+    run: nginx
+  name: nginx
+  namespace: default
+  resourceVersion: "14347"
+  uid: 5b7ea8ad-ea95-4f71-9caf-829548d25a47
+spec:
+  containers:
+  - image: nginx
+    imagePullPolicy: Always
+    name: nginx
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-stqrp
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: minikube
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-stqrp
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2021-11-26T15:03:26Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2021-11-26T15:03:45Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2021-11-26T15:03:45Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2021-11-26T15:03:26Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://382e94f94156b715b2d02b18165eb6588bbe427a4b6392968bc1c112964ae631
+    image: nginx:latest
+    imageID: docker-pullable://nginx@sha256:097c3a0913d7e3a5b01b6c685a60c03632fc7a2b50bc8e35bcaa3691d788226e
+    lastState: {}
+    name: nginx
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2021-11-26T15:03:45Z"
+  hostIP: 192.168.99.100
+  phase: Running
+  podIP: 172.17.0.6
+  podIPs:
+  - ip: 172.17.0.6
+  qosClass: BestEffort
+  startTime: "2021-11-26T15:03:26Z"
+
+```
+
+# Redirecionando e criando o pod
+
+> **_Meu primeiro pod em yaml_** :
+
+```
+kubectl get pods nginx -o yaml > primeiro_pod_orbite.yaml
+
+```
+
+```
+ls -lha
+total 116K
+drwxrwxr-x  8 orbite orbite 4,0K Nov 26 12:33 .
+drwxr-xr-x 43 orbite orbite 4,0K Nov 26 11:57 ..
+-rw-------  1 orbite orbite  348 Nov 22 14:12 2021-11-22-17-12-26.076-VBoxHeadless-3167.log
+-rwx------  1 orbite orbite  11K Oct 30 19:38 get_helm.sh
+drwxrwxr-x  8 orbite orbite 4,0K Nov 22 18:26 .git
+drwxrwxr-x  2 orbite orbite 4,0K Oct 30 19:27 hello
+drwxrwxr-x  3 orbite orbite 4,0K Oct 30 19:27 hello-helm3
+drwxrwxr-x  3 orbite orbite 4,0K Oct 30 19:27 hello-k8s
+drwxrwxr-x  2 orbite orbite 4,0K Oct 30 19:27 hello-k8s-old
+drwx------  3 orbite orbite 4,0K Oct 28 22:31 hello-namespace
+-rw-rw-r--  1 orbite orbite  35K Oct 30 19:27 LICENSE
+-rw-rw-r--  1 orbite orbite 2,5K Nov 26 12:33 primeiro_pod_orbite.yaml
+-rw-rw-r--  1 orbite orbite  27K Nov 26 12:32 README.md
+
+```
+
+```
+kubectl get pods -n default
+NAME                    READY   STATUS    RESTARTS        AGE
+demo-6465d8f7c9-6pqd7   1/1     Running   5 (3d17h ago)   26d
+nginx                   1/1     Running   0               43m
+
+```
+
+> **_namespace sem nada_** :
+
+```
+kubectl get pods -n orbite-namespace
+No resources found in orbite-namespace namespace.
+
+```
+
