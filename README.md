@@ -999,3 +999,142 @@ nginx                   1/1     Running   0               62s
 
 ```
 
+```
+kubectl delete pods nginx
+pod "nginx" deleted
+
+```
+> **_Alterar yaml add linhas com a porta_** :
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx  
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources: {}
+    ports:              # add
+    - containerPort: 80 # add
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+```
+
+```
+kubectl create -f segundo_pod_orbite.yaml 
+pod/nginx created
+
+```
+
+```
+kubectl get pods
+NAME                    READY   STATUS    RESTARTS        AGE
+demo-6465d8f7c9-6pqd7   1/1     Running   5 (3d18h ago)   26d
+nginx                   1/1     Running   0               99s
+
+```
+> **_Describe com a porta_** :
+
+```
+kubectl describe pods nginx
+Name:         nginx
+Namespace:    default
+Priority:     0
+Node:         minikube/192.168.99.100
+Start Time:   Fri, 26 Nov 2021 13:23:19 -0300
+Labels:       run=nginx
+Annotations:  <none>
+Status:       Running
+IP:           172.17.0.6
+IPs:
+  IP:  172.17.0.6
+Containers:
+  nginx:
+    Container ID:   docker://68765f16eb745e0b96d69c5a577e55611392c585a8e2ddacd9affb2cac3612ac
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:097c3a0913d7e3a5b01b6c685a60c03632fc7a2b50bc8e35bcaa3691d788226e
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Fri, 26 Nov 2021 13:23:23 -0300
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-xx949 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-xx949:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  2m30s  default-scheduler  Successfully assigned default/nginx to minikube
+  Normal  Pulling    2m29s  kubelet            Pulling image "nginx"
+  Normal  Pulled     2m27s  kubelet            Successfully pulled image "nginx" in 1.92246513s
+  Normal  Created    2m27s  kubelet            Created container nginx
+  Normal  Started    2m27s  kubelet            Started container nginx
+
+```  
+
+# Expose no pod nginx
+
+> **_Expondo a porta do nginx_** :
+
+```
+kubectl expose pod nginx
+service/nginx exposed
+
+```
+
+```
+kubectl get service
+NAME         TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1     <none>        443/TCP   26d
+nginx        ClusterIP   10.99.99.30   <none>        80/TCP    37s
+
+```
+# Describe services nginx
+
+> **_Describe no service do nginx_** :
+
+```
+kubectl describe services nginx
+Name:              nginx
+Namespace:         default
+Labels:            run=nginx
+Annotations:       <none>
+Selector:          run=nginx
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.99.99.30
+IPs:               10.99.99.30
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         172.17.0.6:80
+Session Affinity:  None
+Events:            <none>
+
+```
+

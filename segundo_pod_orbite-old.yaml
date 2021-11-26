@@ -10,8 +10,6 @@ spec:
   - image: nginx
     name: nginx
     resources: {}
-    ports:              # add
-    - containerPort: 80 # add
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
