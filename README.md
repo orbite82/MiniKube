@@ -902,4 +902,100 @@ kubectl get pods -n orbite-namespace
 No resources found in orbite-namespace namespace.
 
 ```
+# Criando pod
+
+> **_Criando o primeiro pod_** :
+
+```
+kubectl create -f primeiro_pod_orbite.yaml
+pod/nginx created
+
+```
+
+> **_namespace com o pod_** :
+
+```
+kubectl get pods -n orbite-namespace
+NAME    READY   STATUS    RESTARTS   AGE
+nginx   1/1     Running   0          97s
+
+```
+# Deletando pod
+
+> **_Deletando o pod_** :
+
+```
+kubectl delete -f primeiro_pod_orbite.yaml
+pod "nginx" deleted
+
+```
+
+```
+kubectl get pods
+NAME                    READY   STATUS    RESTARTS        AGE
+demo-6465d8f7c9-6pqd7   1/1     Running   5 (3d18h ago)   26d
+nginx
+
+```
+
+```
+kubectl delete pods nginx
+pod "nginx" deleted
+
+```
+# Criando um template para seus yaml
+
+> **_Template yaml apenas pra simular_** :
+
+```
+kubectl run nginx --image=nginx --dry-run=client
+pod/nginx created (dry run)
+
+```
+
+> **_Template yaml para visualizar_** :
+
+```
+kubectl run nginx --image=nginx --dry-run=client -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+```
+
+> **_Template yaml redirecionando e crian do o arquivo yaml_** :
+
+```
+kubectl run nginx --image=nginx --dry-run=client -o yaml > segundo_pod_orbite.yaml
+
+```
+# Criando 2 Pod
+
+> **_Criando segundo pod_** :
+
+```
+kubectl create -f segundo_pod_orbite.yaml 
+pod/nginx created
+
+```
+
+```
+kubectl get pods
+NAME                    READY   STATUS    RESTARTS        AGE
+demo-6465d8f7c9-6pqd7   1/1     Running   5 (3d18h ago)   26d
+nginx                   1/1     Running   0               62s
+
+```
 
