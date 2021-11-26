@@ -1201,6 +1201,8 @@ minikube ip
 
 http://192.168.99.100:32371
 
+> **_Click abaixo_**
+
 [nginx-browser-test](nginx-browser-test.png)
 
 
